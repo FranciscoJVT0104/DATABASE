@@ -1,21 +1,69 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Gestor CSV a Excel</title>
-<link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <title>Gestor CSV</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        button {
+            margin: 8px;
+            padding: 10px 18px;
+            background: #007bff;
+            border: none;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            border: 1px solid #333;
+            padding: 6px;
+            text-align: left;
+        }
+
+        th {
+            background: #ddd;
+        }
+
+        td[contenteditable="true"] {
+            background-color: #f7f7f7;
+        }
+    </style>
 </head>
 <body>
 
-<h2>Importar y Editar CSV</h2>
+    <h2>Gestor CSV – Importar, Editar y Exportar</h2>
 
-<input type="file" id="csvFile" accept=".csv" />
-<button id="exportREV">Exportar REV_NOV.csv</button>
-<button id="exportCONT">Exportar CONT_NOV.csv</button>
+    <!-- Entrada CSV -->
+    <input type="file" id="csvFile" accept=".csv" />
 
-<div id="tableContainer"></div>
+    <br><br>
 
-<script src="script.js"></script>
+    <!-- Botones independientes -->
+    <button id="exportREV">Exportar REV_NOV.csv</button>
+    <button id="exportCONT">Exportar CONT_NOV.csv</button>
+
+    <!-- Tabla -->
+    <div id="tableContainer"></div>
+
+    <script src="script.js"></script>
 
 </body>
 </html>
