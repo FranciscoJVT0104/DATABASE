@@ -1,47 +1,21 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>REV NOV - Generador Excel</title>
+    <meta charset="UTF-8">
+    <title>Lector de Excel</title>
+    <link rel="stylesheet" href="styles.css">
 
-<!-- Hoja de estilos -->
-<link rel="stylesheet" href="style.css">
-
-<!-- Librería XLSX -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-
+    <!-- Librería XLSX -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 </head>
 <body>
 
-<h2>Hoja editable tipo Excel</h2>
+<h2>Lector de Excel</h2>
 
-<div class="acciones">
-    <button onclick="agregarFilas()">Agregar 50 filas</button>
+<input type="file" id="excelFile" accept=".xlsx,.xls,.csv">
 
-    <input type="file" id="csvInput" accept=".csv" onchange="cargarCSV()">
-    <label for="csvInput" class="cargar-csv"><b>Cargar CSV</b></label>
-</div>
+<div id="tableContainer"></div>
 
-<table id="tablaDatos">
-    <thead>
-        <tr>
-            <th>APELLIDOS</th>
-            <th>NOMBRES</th>
-            <th>CURSO</th>
-            <th>DNI</th>
-            <th>CELULAR</th>
-            <th>NUMERO DE INFORME</th>
-            <th>OBSERVACION</th>
-        </tr>
-    </thead>
-
-    <tbody id="tbody"></tbody>
-</table>
-
-<button onclick="exportarExcel()" class="exportar">EXPORTAR REV NOV</button>
-
-<!-- Archivo JavaScript -->
-<script src="app.js"></script>
-
+<script src="script.js"></script>
 </body>
 </html>
