@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Lector Excel</title>
-    <link rel="stylesheet" href="style.css">
-
-    <!-- Librería para leer Excel -->
-    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+<meta charset="UTF-8">
+<title>Gestor CSV a Excel</title>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<h1>Lector de Archivos Excel</h1>
+<h2>Importar y Editar CSV</h2>
 
-<input type="file" id="inputExcel" accept=".xlsx,.xls,.csv">
+<input type="file" id="csvFile" accept=".csv" />
+<button id="exportBtn">Exportar a Excel (REV NOV)</button>
 
 <div id="tableContainer"></div>
 
-<script src="app.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="script.js"></script>
+
 </body>
 </html>
