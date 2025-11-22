@@ -10,7 +10,6 @@ document.getElementById("csvFile").addEventListener("change", function (e) {
     reader.readAsText(file, "UTF-8");
 });
 
-
 function loadCSVtoTable(csvText) {
     const rows = csvText.split("\n").map(row => row.split(";"));
 
@@ -32,7 +31,8 @@ function loadCSVtoTable(csvText) {
 }
 
 
-document.getElementById("exportBtn").addEventListener("click", function () {
+// ------------------------ EXPORTAR REV_NOV ------------------------
+document.getElementById("exportREV").addEventListener("click", function () {
     const table = document.querySelector("table");
     if (!table) {
         alert("Primero carga un archivo CSV.");
@@ -41,7 +41,6 @@ document.getElementById("exportBtn").addEventListener("click", function () {
 
     const rows = [...table.querySelectorAll("tbody tr")];
     const exportREV = [];
-    const exportCONT = [];
 
     rows.forEach(row => {
         const cols = [...row.children].map(td => td.innerText.trim());
@@ -57,7 +56,6 @@ document.getElementById("exportBtn").addEventListener("click", function () {
         const letraApellido = apellidos.charAt(0).toUpperCase();
         const letraNombre = nombres.charAt(0).toUpperCase();
 
-        // ---------- ARCHIVO REV_NOV ----------
         exportREV.push({
             username: dni,
             password: dni + letraApellido + letraNombre,
@@ -69,8 +67,32 @@ document.getElementById("exportBtn").addEventListener("click", function () {
             group1: informe,
             obs: obs
         });
+    });
 
-        // ---------- ARCHIVO CONT_NOV ----------
+    exportToCSV(exportREV, "REV_NOV.csv");
+});
+
+
+// ------------------------ EXPORTAR CONT_NOV ------------------------
+document.getElementById("exportCONT").addEventListener("click", function () {
+    const table = document.querySelector("table");
+    if (!table) {
+        alert("Primero carga un archivo CSV.");
+        return;
+    }
+
+    const rows = [...table.querySelectorAll("tbody tr")];
+    const exportCONT = [];
+
+    rows.forEach(row => {
+        const cols = [...row.children].map(td => td.innerText.trim());
+
+        const apellidos = cols[0];
+        const nombres = cols[1];
+        const celular = cols[4];
+        const informe = cols[5];
+        const obs = cols[6];
+
         exportCONT.push({
             Nombre: apellidos + " " + nombres + " " + informe,
             Apellido: "",
@@ -82,12 +104,11 @@ document.getElementById("exportBtn").addEventListener("click", function () {
         });
     });
 
-    exportToCSV(exportREV, "REV_NOV.csv");
     exportToCSV(exportCONT, "CONT_NOV.csv");
 });
 
 
-// EXPORTAR CSV CON UTF-8 + BOM
+// ------------------------ FUNCIÓN COMÚN EXPORTAR CSV ------------------------
 function exportToCSV(jsonData, filename) {
     const headers = Object.keys(jsonData[0]).join(";") + "\n";
     const rows = jsonData
@@ -96,7 +117,7 @@ function exportToCSV(jsonData, filename) {
 
     const csvContent = headers + rows;
 
-    // BOM para que Excel acepte tildes y ñ
+    // Fuerza UTF-8 con BOM (para tildes y ñ)
     const BOM = "\uFEFF";
 
     const blob = new Blob([BOM + csvContent], { type: "text/csv;charset=utf-8;" });
