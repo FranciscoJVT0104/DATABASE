@@ -1,1 +1,62 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background: #f4f4f4;
+}
+
+h2 {
+    text-align: center;
+}
+
+.acciones {
+    margin-bottom: 15px;
+}
+
+button {
+    padding: 10px 18px;
+    font-size: 15px;
+    cursor: pointer;
+    background: #007bff;
+    color: white;
+    border: none;
+    margin-right: 10px;
+}
+
+.cargar-csv {
+    cursor: pointer;
+    color: white;
+    background: #28a745;
+    padding: 10px 15px;
+    border-radius: 4px;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+th, td {
+    border: 1px solid #bbb;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background: #333;
+    color: white;
+}
+
+td[contenteditable="true"] {
+    background: #fafafa;
+}
+
+.exportar {
+    margin-top: 20px;
+    background: #ff9800;
+}
 
