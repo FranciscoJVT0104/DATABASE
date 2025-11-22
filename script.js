@@ -179,13 +179,13 @@ document.getElementById("exportCONT").addEventListener("click", function () {
     const encabezados = ["Nombre","Apellido","Telefono","correo electronico","Direccion","Cumpleaños","Observaciones"];
 
     const filas = datos.map(d => [
+        "", // Nombre (vacío)
         (d.APELLIDOS + " " + d.NOMBRES + " " + (d.INFORME || "")).trim(), // Nombre = APELLIDOS + NOMBRES + NUMERO DE INFORME
-        "",                                                               // Apellido (vacío por tu especificación)
         d.CELULAR || "",                                                  // Telefono
         (d.CELULAR || "") + "s@gmail.com",                                // correo electronico
         "ESTANDAR",                                                       // Direccion
         d.FECHA || "",                                                    // Cumpleaños = FECHA
-        d.OBS || ""                                                       // Observaciones
+        (d.INFORME) || ""                                                 // Observaciones
     ]);
 
     descargarCSV("CONT_NOV.csv", encabezados, filas);
