@@ -95,7 +95,7 @@ document.getElementById("exportCONT").addEventListener("click", function () {
 
         exportCONT.push({
             Nombre: "",
-            Apellido: apellidos + " " + nombres + " " + informe,
+            Apellido: apellidos + " " + nombres + " " + obs,
             Telefono: celular,
             "correo electronico": celular + "s@gmail.com",
             Direccion: "ESTANDAR",
