@@ -68,14 +68,26 @@ document.getElementById("exportBtn").addEventListener("click", function () {
         });
     });
 
-    exportToExcel(exportData);
+    exportToCSV(exportData);
 });
 
 
-function exportToExcel(jsonData) {
-    const ws = XLSX.utils.json_to_sheet(jsonData);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "REV NOV");
+function exportToCSV(jsonData) {
+    const headers = Object.keys(jsonData[0]).join(";") + "\n";
 
-    XLSX.writeFile(wb, "REV_NOV.xlsx");
+    const rows = jsonData
+        .map(obj => Object.values(obj).join(";"))
+        .join("\n");
+
+    const csvContent = headers + rows;
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "REV_NOV.csv";
+    a.click();
+
+    URL.revokeObjectURL(url);
 }
