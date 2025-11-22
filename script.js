@@ -74,14 +74,14 @@ document.getElementById("exportBtn").addEventListener("click", function () {
 
 function exportToCSV(jsonData) {
     const headers = Object.keys(jsonData[0]).join(";") + "\n";
-
     const rows = jsonData
         .map(obj => Object.values(obj).join(";"))
         .join("\n");
 
     const csvContent = headers + rows;
+    const BOM = "\uFEFF";
 
-    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const blob = new Blob([BOM + csvContent], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
 
     const a = document.createElement("a");
