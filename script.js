@@ -40,7 +40,8 @@ document.getElementById("exportBtn").addEventListener("click", function () {
     }
 
     const rows = [...table.querySelectorAll("tbody tr")];
-    const exportData = [];
+    const exportREV = [];
+    const exportCONT = [];
 
     rows.forEach(row => {
         const cols = [...row.children].map(td => td.innerText.trim());
@@ -49,13 +50,15 @@ document.getElementById("exportBtn").addEventListener("click", function () {
         const nombres = cols[1];
         const curso = cols[2];
         const dni = cols[3];
+        const celular = cols[4];
         const informe = cols[5];
         const obs = cols[6];
 
         const letraApellido = apellidos.charAt(0).toUpperCase();
         const letraNombre = nombres.charAt(0).toUpperCase();
 
-        exportData.push({
+        // ---------- ARCHIVO REV_NOV ----------
+        exportREV.push({
             username: dni,
             password: dni + letraApellido + letraNombre,
             firstname: nombres,
@@ -66,19 +69,34 @@ document.getElementById("exportBtn").addEventListener("click", function () {
             group1: informe,
             obs: obs
         });
+
+        // ---------- ARCHIVO CONT_NOV ----------
+        exportCONT.push({
+            Nombre: apellidos + " " + nombres + " " + informe,
+            Apellido: "",
+            Telefono: celular,
+            "correo electronico": celular + "s@gmail.com",
+            Direccion: "ESTANDAR",
+            Cumpleaños: informe,
+            Observaciones: obs
+        });
     });
 
-    exportToCSV(exportData);
+    exportToCSV(exportREV, "REV_NOV.csv");
+    exportToCSV(exportCONT, "CONT_NOV.csv");
 });
 
 
-function exportToCSV(jsonData) {
+// EXPORTAR CSV CON UTF-8 + BOM
+function exportToCSV(jsonData, filename) {
     const headers = Object.keys(jsonData[0]).join(";") + "\n";
     const rows = jsonData
         .map(obj => Object.values(obj).join(";"))
         .join("\n");
 
     const csvContent = headers + rows;
+
+    // BOM para que Excel acepte tildes y ñ
     const BOM = "\uFEFF";
 
     const blob = new Blob([BOM + csvContent], { type: "text/csv;charset=utf-8;" });
@@ -86,7 +104,7 @@ function exportToCSV(jsonData) {
 
     const a = document.createElement("a");
     a.href = url;
-    a.download = "REV_NOV.csv";
+    a.download = filename;
     a.click();
 
     URL.revokeObjectURL(url);
