@@ -182,7 +182,7 @@ document.getElementById("exportCONT").addEventListener("click", function () {
         "", // Nombre (vacío)
         (d.APELLIDOS + " " + d.NOMBRES + " " + (d.INFORME || "")).trim(), // Nombre = APELLIDOS + NOMBRES + NUMERO DE INFORME
         d.CELULAR || "",                                                  // Telefono
-        (d.CELULAR || "") + "s@gmail.com",                                // correo electronico
+        (d.CELULAR || "") + "s@actualizar.com",                           // correo electronico
         "ESTANDAR",                                                       // Direccion
         d.FECHA || "",                                                    // Cumpleaños = FECHA
         (d.INFORME) || ""                                                 // Observaciones
