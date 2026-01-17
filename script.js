@@ -2,6 +2,7 @@
 // script.js (optimizado y corregido)
 // -----------------------------
 
+// ==============================
 // IMPORTAR CSV
 document.getElementById("csvFile").addEventListener("change", function (e) {
     const file = e.target.files[0];
@@ -55,7 +56,7 @@ function obtenerDatosDeLaTabla() {
             APELLIDOS: cells[0].innerText.trim(),
             NOMBRES:   cells[1].innerText.trim(),
             CURSO:     cells[2].innerText.trim(),
-            DNI:       cells[3].innerText.trim(),
+            DNI:       normalizarDocumento(cells[3].innerText),
             CELULAR:   cells[4].innerText.trim(),
             FECHA:     cells[5].innerText.trim(),
             INFORME:   cells[6].innerText.trim(),
@@ -68,12 +69,41 @@ function obtenerDatosDeLaTabla() {
 
 // =====================================================
 // HELPERS
+
 function primeraLetraPrimerPalabra(text) {
     if (!text) return "";
     const firstWord = text.trim().split(/\s+/)[0];
     return firstWord.charAt(0).toUpperCase() || "";
 }
 
+// NORMALIZAR DNI / CARNET DE EXTRANJERÍA
+function normalizarDocumento(doc) {
+    if (!doc) return "";
+
+    let limpio = doc.toString().trim().toUpperCase();
+
+    // Eliminar todo lo que no sea número
+    let soloNumeros = limpio.replace(/\D/g, "");
+
+    // DNI 7 dígitos → agregar 0
+    if (soloNumeros.length === 7) {
+        return "0" + soloNumeros;
+    }
+
+    // DNI correcto
+    if (soloNumeros.length === 8) {
+        return soloNumeros;
+    }
+
+    // Carnet de extranjería → SOLO 9 dígitos
+    if (soloNumeros.length >= 9) {
+        return soloNumeros.substring(0, 9);
+    }
+
+    return soloNumeros;
+}
+
+// =====================================================
 // DESCARGAR CSV UTF-8 CON BOM
 function descargarCSV(filename, headers, rows) {
     const sep = ";";
@@ -145,7 +175,7 @@ document.getElementById("exportCONT").addEventListener("click", function () {
     const encabezados = ["Nombre","Apellido","Telefono","correo electronico","Direccion","Cumpleaños","Observaciones"];
 
     const filas = datos.map(d => [
-        "", 
+        "",
         (d.APELLIDOS + " " + d.NOMBRES + " " + (d.INFORME || "")).trim(),
         d.CELULAR || "",
         (d.CELULAR || "") + "s@actualizar.com",
