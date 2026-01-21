@@ -559,7 +559,7 @@ document.getElementById("exportCONT").addEventListener("click", function () {
         d.CELULAR + "s@actualizar.com",
         "ESTANDAR",
         d.FECHA || "",
-        d.INFORME || ""
+        d.OBS
     ]);
     descargarCSV("CONT_NOV.csv", encabezados, filas);
 });
