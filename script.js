@@ -1,7 +1,3 @@
-// -----------------------------
-// script.js (FINAL)
-// -----------------------------
-
 // ==============================
 // IMPORTAR CSV
 document.getElementById("csvFile").addEventListener("change", function (e) {
@@ -40,28 +36,30 @@ function cargarCSVEnTabla(csvText) {
 // LEER TABLA COMO OBJETOS
 function obtenerDatosDeLaTabla() {
     const table = document.querySelector("#tableContainer table");
-    if (!table) return [];
-
     const data = [];
-    table.querySelectorAll("tbody tr").forEach(row => {
-        const c = row.querySelectorAll("td");
-        if (c.length < 9) return;
+    if (!table) return data;
+
+    const rows = table.querySelectorAll("tbody tr");
+
+    rows.forEach(row => {
+        const cells = row.querySelectorAll("td");
+        if (cells.length < 11) return;
 
         data.push({
-            APELLIDOS: c[0].innerText.trim(),
-            NOMBRES: c[1].innerText.trim(),
-            CURSO: c[2].innerText.trim(),
-            CARRERA: c[3].innerText.trim(),
-            DNI: normalizarDocumento(c[4].innerText),
-            CELULAR: c[5].innerText.trim(),
-            FECHA: c[6].innerText.trim(),
-            INFORME: c[7].innerText.trim(),
-            OBS: c[8].innerText.trim()
+            APELLIDOS: cells[3].innerText.trim(),
+            NOMBRES: cells[4].innerText.trim(),
+            CURSO: cells[8].innerText.trim(),
+            CARRERA: cells[5].innerText.trim(),   // ESPECIALIDAD
+            DNI: cells[9].innerText.trim(),
+            CELULAR: cells[10].innerText.trim(),
+            FECHA: cells[11].innerText.trim(),  // FECHA DE INFORME
+            INFORME: cells[1].innerText.trim(),   // Nº INFORME
+            OBS: cells[16]?.innerText.trim() || ""
         });
     });
-
     return data;
 }
+
 
 // =====================================================
 // HELPERS
@@ -450,6 +448,19 @@ function descargarCSV(filename, headers, rows) {
     URL.revokeObjectURL(url);
 }
 
+function formatearFUT(nroFut) {
+    if (!nroFut) return "";
+
+    // quitar todo lo que no sea número
+    const num = nroFut.toString().replace(/\D/g, "");
+
+    if (!num) return "";
+
+    // rellenar con ceros a la izquierda hasta 5 dígitos
+    return "REC-" + num.padStart(5, "0");
+}
+
+
 // =====================================================
 // EXPORTAR REV_NOV
 document.getElementById("exportREV").addEventListener("click", () => {
@@ -466,7 +477,7 @@ document.getElementById("exportREV").addEventListener("click", () => {
         d.DNI + "s@actualizar.com",
         "LIMA",
         obtenerShortnameCurso(d.CURSO, d.CARRERA),
-        d.INFORME,
+        formatearFUT(d.INFORME),
         d.OBS
     ]);
 
@@ -543,13 +554,12 @@ document.getElementById("exportCONT").addEventListener("click", function () {
 
     const filas = datos.map(d => [
         "",
-        (d.APELLIDOS + " " + d.NOMBRES + " " + (d.INFORME || "")).trim(),
-        d.CELULAR,                       // ← SOLO 9 DÍGITOS
+        (d.APELLIDOS + " " + d.NOMBRES + " " + formatearFUT(d.INFORME)).trim(),
+        d.CELULAR,
         d.CELULAR + "s@actualizar.com",
         "ESTANDAR",
         d.FECHA || "",
         d.INFORME || ""
     ]);
-
     descargarCSV("CONT_NOV.csv", encabezados, filas);
 });
