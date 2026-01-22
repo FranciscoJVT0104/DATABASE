@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Gestor CSV</title>
     <link rel="stylesheet" href="styles.css">
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -26,13 +27,28 @@
             background: #0056b3;
         }
 
+        #csvFile::file-selector-button {
+            background-color: rgb(0, 207, 0);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        #csvFile::file-selector-button:hover {
+            background-color: #009f08;
+        }
+
+
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 15px;
         }
 
-        th, td {
+        th,
+        td {
             border: 1px solid #333;
             padding: 6px;
             text-align: left;
@@ -47,18 +63,17 @@
         }
     </style>
 </head>
+
 <body>
 
-    <h2>Gestor CSV – Importar, Editar y Exportar</h2>
+    <h2>Gestor CSV – Matricula / Contacto</h2>
 
     <!-- Entrada CSV -->
     <input type="file" id="csvFile" accept=".csv" />
-
     <br><br>
-
     <!-- Botones independientes -->
-    <button id="exportREV">Exportar REV_NOV.csv</button>
-    <button id="exportCONT">Exportar CONT_NOV.csv</button>
+    <button id="exportREV"><i class="fa-solid fa-pen-to-square fa-lg" style="color: #ffffff;"></i> Exportar REV_NOV.csv</button>
+    <button id="exportCONT"> <i class="fa-solid fa-address-book fa-lg" style="color: #ffffff;"></i> Exportar CONT_NOV.csv</button>
 
     <!-- Tabla -->
     <div id="tableContainer"></div>
@@ -66,4 +81,5 @@
     <script src="script.js"></script>
 
 </body>
+
 </html>
